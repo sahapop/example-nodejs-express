@@ -33,3 +33,4 @@ jobs:
             docker push ima8/example-nodejs-circle:latest
             docker push ima8/example-nodejs-circle:${CIRCLE_SHA1}
       - run: echo Done
+      
