@@ -17,9 +17,19 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: npm install
-      - run: npm run test
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run: npm run test
+      - setup_remote_docker
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run:
+          name: "Build docker image and push to docker hub"
+          command: |
+            cp Dockerfile.product Dockerfile
+            docker build -t ima8/example-nodejs-circle:latest .
+            docker build -t ima8/example-nodejs-circle:${CIRCLE_SHA1} .
+            docker push ima8/example-nodejs-circle:latest
+            docker push ima8/example-nodejs-circle:${CIRCLE_SHA1}
       - run: echo Done
