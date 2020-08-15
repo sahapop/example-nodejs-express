@@ -46,7 +46,7 @@ jobs:
               -e CATTLE_SECERT_KEY="$CATTLE_SECERT_KEY" \
               -e CATTLE_URL:"$CATTLE_URL" \
               etlweather/gaucho upgrade $RANCHER_EXAMPLE_NODEJS \
-              --imageUuid 'docker:sahapopsang/express' \
+              --imageUuid 'docker:sahapopsang/express:latest' \
               --batch_size 3 --start_first \
               --auto_complete --timeout 600 \
               /
