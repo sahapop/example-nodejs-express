@@ -23,7 +23,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm run test
       - setup_remote_docker
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - run: docker login -u $DOCKER_USERNAME --password-stdin $DOCKER_PASSWORD
       - run:
           name: "Build docker image and push to docker hub"
           command: |
@@ -39,3 +39,15 @@ jobs:
               echo "This is ${CIRCLE_BRANCE}"
             fi
       - run: echo Done
+      - run:
+        name: "Call to rancher to deploy"
+        command: : |
+          docker run --rm -it \
+            -e CATTLE_ACCESS_KEY="$CATTLE_ACCESS_KEY" \
+            -e CATTLE_SECERT_KEY="$CATTLE_SECERT_KEY" \
+            -e CATTLE_URL:"$CATTLE_URL" \
+            etlwearther/gaucho upgrade $RANCHER_EXAMPLE_NODEJS \
+            --imageUuid 'docker:sahapopsang/express' \
+            --batch_size 3 --start_first \
+            --auto_complete --timeout 600 \
+            /
