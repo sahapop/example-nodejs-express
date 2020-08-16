@@ -28,13 +28,13 @@ jobs:
           name: "Build docker image and push to docker hub"
           command: |
             if [ "${CIRCLE_BRANCE}" == "master" ]; then
-              docker build -t ima8/example-nodejs-circle:latest .
-              docker build -t ima8/example-nodejs-circle:${CIRCLE_SHA1} .
-              docker push ima8/example-nodejs-circle:latest
-              docker push ima8/example-nodejs-circle:${CIRCLE_SHA1}
+              docker build -t sahapopsang/express:latest .
+              docker build -t sahapopsang/express:${CIRCLE_SHA1} .
+              docker push sahapopsang/express:latest
+              docker push sahapopsang/express:${CIRCLE_SHA1}
             elif [ "${CIRCLE_BRANCE}" == "staging" ]; then
-              docker build -t ima8/example-nodejs-circle:latest .
-              docker push ima8/example-nodejs-circle:latest
+              docker build -t sahapopsang/express:latest .
+              docker push sahapopsang/express:latest
             else
               echo "This is ${CIRCLE_BRANCE}"
             fi
